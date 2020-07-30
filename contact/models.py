@@ -1,4 +1,5 @@
 from django.db import models
+from .managers import PhoneManager
 
 
 class Contact(models.Model):
@@ -15,6 +16,7 @@ class Phone(models.Model):
                                 on_delete=models.CASCADE,
                                 db_column='idcontato')
     number = models.CharField(max_length=16, db_column='numero')
+    objects = PhoneManager()
 
     class Meta:
         managed = True

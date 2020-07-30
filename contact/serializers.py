@@ -9,7 +9,7 @@ class PhoneSerializer(ModelSerializer):
 
 
 class ContactSerializer(ModelSerializer):
-    phones = PhoneSerializer(many=True)
+    phones = PhoneSerializer(source='phone_set', many=True)
 
     class Meta():
         model = Contact
