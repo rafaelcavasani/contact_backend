@@ -1,0 +1,14 @@
+# editor
+.vscode
+.idea
+
+# environment
+.env
+venv
+
+# python/django
+**/__pycache__/*
+*pyc
+/media/
+/static/
+/staticfiles/
