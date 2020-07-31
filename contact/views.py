@@ -1,3 +1,4 @@
+import logging
 from django.db import transaction
 from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
@@ -6,6 +7,7 @@ from .models import Contact, Phone
 from .serializers import ContactSerializer
 from .forms import ContactForm
 
+logger = logging.getLogger('contact')
 
 class ContactViewSet(ModelViewSet):
     serializer_class = ContactSerializer
@@ -79,3 +81,18 @@ class ContactViewSet(ModelViewSet):
         page = self.paginate_queryset(queryset)
         serializer = ContactSerializer(page, many=True)
         return self.get_paginated_response(data=serializer.data)
+
+
+    def destroy(self, request, *args, **kwargs):
+        contact_id = kwargs['pk']
+        try:
+            contact = Contact.objects.get(id=contact_id)
+        except Contact.DoesNotExist:
+            data = 'Contato não encontrado.'
+            return Response(data=data, status=404)
+        id = contact.id
+        name = contact.name
+        contact.delete()
+        logger.info('Contato excluido: {} - {}'.format(id, name))
+        data = 'Contato excluído com sucesso.'
+        return Response(data=data, status=200)
