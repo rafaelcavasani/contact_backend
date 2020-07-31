@@ -24,3 +24,7 @@ python manage.py runserver
 # Banco de dados
 
 SQLite
+
+# Deploy na Heroku
+
+https://contacts-be.herokuapp.com/ 
