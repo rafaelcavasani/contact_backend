@@ -1,6 +1,7 @@
+from django.db import transaction
+from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from django.db import transaction
 from .models import Contact, Phone
 from .serializers import ContactSerializer
 from .forms import ContactForm
@@ -66,3 +67,15 @@ class ContactViewSet(ModelViewSet):
 
         serializer = ContactSerializer(contact)
         return Response(data=serializer.data, status=200)
+
+    def list(self, request, *args, **kwargs):
+        queryset = Contact.objects.filter()
+
+        text = request.query_params.get('text', None)
+        if text:
+            queryset = queryset.filter(
+                Q(name__icontains=text) | Q(phone__number__icontains=text))
+
+        page = self.paginate_queryset(queryset)
+        serializer = ContactSerializer(page, many=True)
+        return self.get_paginated_response(data=serializer.data)
