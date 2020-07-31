@@ -7,7 +7,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost', '127.0.0.1', 'https://contacts-be.herokuapp.com/']
 CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS = [
@@ -52,7 +53,8 @@ TEMPLATES = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 
+        'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 25
 }
 
